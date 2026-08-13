@@ -578,6 +578,17 @@ function setupEventListeners() {
 
   domBtnStartRace.addEventListener('click', startRace);
   domBtnCancelRace.addEventListener('click', cancelRace);
+
+  // Recenter Map
+  const domBtnRecenter = document.getElementById('btn-recenter-map');
+  domBtnRecenter.addEventListener('click', () => {
+    if (userPosition) {
+      map.panTo(userPosition);
+      showToast('🎯 Centered map on your location', 'info');
+    } else {
+      showToast('🛰️ Waiting for GPS lock...', 'error');
+    }
+  });
 }
 
 // --- UTILITY: TOAST NOTIFICATIONS ---
