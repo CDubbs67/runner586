@@ -60,11 +60,31 @@ function init() {
 function setupMap() {
   const defaultLocation = [40.7128, -74.0060];
   
+  // Set map bounds to match world coordinates vertically, but allow infinite horizontal scrolling
+  const southWest = L.latLng(-85, -360);
+  const northEast = L.latLng(85, 360);
+  const bounds = L.latLngBounds(southWest, northEast);
+
   // Set maxZoom to 21 to allow zooming in to see houses
   map = L.map('map', {
     zoomControl: true,
-    maxZoom: 21
+    minZoom: 1.5,
+    maxZoom: 21,
+    maxBounds: bounds,
+    maxBoundsViscosity: 1.0,
+    worldCopyJump: true // allows looping left-to-right continuously
   }).setView(defaultLocation, 16);
+
+  // Monitor zoom levels to toggle a globe-like circle clip
+  map.on('zoomend', () => {
+    const zoom = map.getZoom();
+    const mapEl = document.getElementById('map');
+    if (zoom <= 3) {
+      mapEl.classList.add('circle-world');
+    } else {
+      mapEl.classList.remove('circle-world');
+    }
+  });
 
   // Define layers
   streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
