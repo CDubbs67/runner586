@@ -610,5 +610,75 @@ function showToast(message, type = 'info') {
   }, 4000);
 }
 
-window.onload = init;
+window.onload = () => {
+  init();
+  makePanelDraggable();
+};
+
+function makePanelDraggable() {
+  const panel = document.getElementById('draggable-panel');
+  const handle = document.getElementById('panel-drag-handle');
+  if (!panel || !handle) return;
+
+  let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+  handle.onmousedown = dragMouseDown;
+  handle.ontouchstart = dragTouchStart;
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function dragTouchStart(e) {
+    if (e.touches.length === 1) {
+      pos3 = e.touches[0].clientX;
+      pos4 = e.touches[0].clientY;
+      document.ontouchend = closeDragElement;
+      document.ontouchmove = elementTouchDrag;
+    }
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    
+    // Set new position
+    const newTop = Math.max(10, Math.min(window.innerHeight - 150, panel.offsetTop - pos2));
+    const newLeft = Math.max(10, Math.min(window.innerWidth - 100, panel.offsetLeft - pos1));
+    
+    panel.style.top = newTop + "px";
+    panel.style.left = newLeft + "px";
+  }
+
+  function elementTouchDrag(e) {
+    if (e.touches.length === 1) {
+      pos1 = pos3 - e.touches[0].clientX;
+      pos2 = pos4 - e.touches[0].clientY;
+      pos3 = e.touches[0].clientX;
+      pos4 = e.touches[0].clientY;
+      
+      const newTop = Math.max(10, Math.min(window.innerHeight - 150, panel.offsetTop - pos2));
+      const newLeft = Math.max(10, Math.min(window.innerWidth - 100, panel.offsetLeft - pos1));
+      
+      panel.style.top = newTop + "px";
+      panel.style.left = newLeft + "px";
+    }
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+    document.ontouchend = null;
+    document.ontouchmove = null;
+  }
+}
 

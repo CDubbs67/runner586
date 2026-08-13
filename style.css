@@ -102,16 +102,36 @@ body, html {
 /* Side Stats Panel */
 .stats-panel {
   position: absolute;
-  top: 90px;
+  top: 80px;
   left: 20px;
-  width: 300px;
-  z-index: 10;
-  padding: 20px;
+  width: 280px;
+  z-index: 999;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-height: calc(100vh - 120px);
+  gap: 12px;
+  max-height: calc(100vh - 100px);
   overflow-y: auto;
+}
+
+.drag-handle {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 6px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: move;
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drag-dots {
+  color: var(--accent-cyan);
 }
 
 .panel-section {
