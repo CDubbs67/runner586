@@ -45,6 +45,22 @@
         </div>
       </section>
 
+      <!-- Section: Race Settings -->
+      <section class="panel-section">
+        <h3>🤖 BOT RACE SETTINGS</h3>
+        <div class="control-row">
+          <label for="input-bot-speed">Bot Speed: <span id="label-bot-speed">5.0</span> km/h</label>
+          <input type="range" id="input-bot-speed" min="1" max="30" step="0.5" value="5.0">
+        </div>
+        <div class="race-actions">
+          <button id="btn-start-race" class="btn primary" disabled>START RACE</button>
+          <button id="btn-cancel-race" class="btn secondary" style="display:none;">CANCEL</button>
+        </div>
+        <div id="target-instruction" class="instruction-text">
+          📍 Click on the map to set checkpoints
+        </div>
+      </section>
+
       <!-- Section: Map Style -->
       <section class="panel-section">
         <h3>🗺️ MAP STYLE</h3>
@@ -59,12 +75,28 @@
         <h3>📊 LIVE METRICS</h3>
         <div class="stats-grid">
           <div class="stat-box">
-            <span class="stat-label">Speed</span>
+            <span class="stat-label">Your Speed</span>
             <span class="stat-value" id="stat-speed">0.0 km/h</span>
           </div>
           <div class="stat-box">
-            <span class="stat-label">Distance</span>
+            <span class="stat-label">Dist. Traveled</span>
             <span class="stat-value" id="stat-distance">0 m</span>
+          </div>
+          <div class="stat-box" id="stat-box-player-cp">
+            <span class="stat-label">Your Checkpoint</span>
+            <span class="stat-value" id="stat-player-cp">0 / 0</span>
+          </div>
+          <div class="stat-box" id="stat-box-bot-cp">
+            <span class="stat-label">Bot Checkpoint</span>
+            <span class="stat-value" id="stat-bot-cp">0 / 0</span>
+          </div>
+          <div class="stat-box" id="stat-box-to-target">
+            <span class="stat-label">Your to Next CP</span>
+            <span class="stat-value" id="stat-player-target">-- m</span>
+          </div>
+          <div class="stat-box" id="stat-box-bot-target">
+            <span class="stat-label">Bot to Next CP</span>
+            <span class="stat-value" id="stat-bot-target">-- m</span>
           </div>
         </div>
       </section>
@@ -86,7 +118,7 @@
 
       <!-- Section: Actions -->
       <section class="panel-section actions">
-        <button id="btn-reset-tracker" class="btn primary">RESET TRACKS</button>
+        <button id="btn-reset-tracker" class="btn secondary-flat">RESET TRACKS</button>
       </section>
     </aside>
 
