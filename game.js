@@ -54,6 +54,20 @@ function init() {
   setupMap();
   setupEventListeners();
   startGpsTracking();
+  
+  // Announcement warning at page load
+  const warningText = "Do not run with your phone out.";
+  showToast(`⚠️ WARNING: ${warningText}`, 'error', 5000);
+  speakAnnouncement(warningText);
+
+  // Hide the full screen warning overlay after 5 seconds
+  const overlay = document.getElementById('warning-overlay');
+  if (overlay) {
+    setTimeout(() => {
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 500);
+    }, 5000);
+  }
 }
 
 // Setup Leaflet Map with standard colorful OpenStreetMap tiles & Satellite tiles
@@ -612,7 +626,7 @@ function setupEventListeners() {
 }
 
 // --- UTILITY: TOAST NOTIFICATIONS ---
-function showToast(message, type = 'info') {
+function showToast(message, type = 'info', durationMs = 4000) {
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   
@@ -627,7 +641,7 @@ function showToast(message, type = 'info') {
     toast.style.opacity = '0';
     toast.style.transition = 'opacity 0.3s ease';
     setTimeout(() => toast.remove(), 300);
-  }, 4000);
+  }, durationMs);
 }
 
 window.onload = () => {
