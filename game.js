@@ -234,9 +234,6 @@ function updateLocation(latlng, accuracy, speedMps) {
   userPosition = latlng;
   userMarker.setLatLng(latlng);
   
-  // Pan map to player
-  map.panTo(latlng);
-
   // Update Coordinates in HUD
   domCoordLat.textContent = latlng.lat.toFixed(6);
   domCoordLng.textContent = latlng.lng.toFixed(6);
@@ -524,10 +521,12 @@ function endRace(winner) {
     showToast('🏆 CONGRATULATIONS! You beat the bot!', 'success');
     domTargetInstruction.textContent = "🎉 YOU WON the race!";
     domTargetInstruction.style.color = "var(--accent-green)";
+    speakAnnouncement("Congratulations! You won the race and beat the bot!");
   } else {
     showToast('🤖 The Bot won the race! Try again!', 'error');
     domTargetInstruction.textContent = "💀 The Bot beat you!";
     domTargetInstruction.style.color = "var(--accent-red)";
+    speakAnnouncement("The bot beat you. Better luck next time!");
   }
 
   // Keep bot and target markers visible to inspect, but change race actions
@@ -535,6 +534,17 @@ function endRace(winner) {
   domBtnStartRace.disabled = false;
   domBtnCancelRace.style.display = 'none';
   domInputBotSpeed.disabled = false;
+}
+
+function speakAnnouncement(text) {
+  if ('speechSynthesis' in window) {
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    window.speechSynthesis.speak(utterance);
+  }
 }
 
 function setupEventListeners() {
