@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GPS Geo-Tracker | Real-Time Location Tracker</title>
+  <meta name="description" content="A clean, simple real-time GPS tracking web app with live maps and statistics.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Main App Shell -->
+  <div id="app">
+    <!-- Map Container -->
+    <div id="map"></div>
+    
+    <!-- Top HUD Header -->
+    <header class="hud-header glass">
+      <div class="brand">
+        <span class="logo-icon">🛰️</span>
+        <h1>GEO-TRACKER</h1>
+      </div>
+      <div class="status-badge active" id="gps-status">TRACKING</div>
+    </header>
+
+    <!-- Side Control / Stats Panel -->
+    <aside class="panel stats-panel glass">
+      <!-- Section: GPS Connection -->
+      <section class="panel-section">
+        <h3>🛰️ GPS SIGNAL</h3>
+        <div class="status-row">
+          <span>Accuracy:</span>
+          <span id="gps-accuracy" class="stat-highlight">Locating...</span>
+        </div>
+      </section>
+
+      <!-- Section: Map Style -->
+      <section class="panel-section">
+        <h3>🗺️ MAP STYLE</h3>
+        <div class="map-toggle-group">
+          <button id="btn-style-street" class="toggle-btn active">Street Map</button>
+          <button id="btn-style-satellite" class="toggle-btn">Satellite</button>
+        </div>
+      </section>
+
+      <!-- Section: Stats -->
+      <section class="panel-section">
+        <h3>📊 LIVE METRICS</h3>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-label">Speed</span>
+            <span class="stat-value" id="stat-speed">0.0 km/h</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Distance</span>
+            <span class="stat-value" id="stat-distance">0 m</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Coordinates -->
+      <section class="panel-section">
+        <h3>📍 COORDINATES</h3>
+        <div class="coords-box">
+          <div class="coord-row">
+            <span>Lat:</span>
+            <span id="coord-lat">--.------</span>
+          </div>
+          <div class="coord-row">
+            <span>Lng:</span>
+            <span id="coord-lng">--.------</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Actions -->
+      <section class="panel-section actions">
+        <button id="btn-reset-tracker" class="btn primary">RESET TRACKS</button>
+      </section>
+    </aside>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+  </div>
+
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+     
+  <!-- Custom Game Logic -->
+  <script src="game.js"></script>
+</body>
+</html>
